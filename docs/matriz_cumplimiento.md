@@ -1,6 +1,6 @@
 # Matriz de cumplimiento de Actividad 6
 
-**Alcance:** instrucciones de Módulo 2 / Semana 7. Esta tabla verifica entregables concretos publicados; no es calificación oficial. **Modificación de formato propuesta:** enlace GitHub en lugar de ZIP, a confirmar para esta actividad.
+**Alcance:** instrucciones de Módulo 2 / Semana 7. Esta tabla verifica entregables concretos publicados; no es calificación oficial. **Formato de entrega confirmado por el estudiante:** enlace al repositorio GitHub en sustitución del ZIP.
 
 | Instrucción / criterio | Archivo / evidencia reproducible | Estado |
 |---|---|---|
@@ -19,7 +19,7 @@
 | Evidencia de experimentación | GitHub Actions en verde, CSV, figuras, notebook ejecutado 8/8 | Cumple |
 | Reporte técnico 6–8 páginas | docs/Reporte_Tecnico_Actividad6.pdf (7 páginas) | Cumple |
 | Tablero Trello visual | https://trello.com/b/EIKcvZ7j/banking-conversion-ai-actividad-6 (5 listas, 10 tarjetas) | Construido, acceso docente pendiente |
-| Entrega en ZIP | Se sustituye por enlace GitHub | **Pendiente confirmación de autorización en Actividad 6** |
+| Entrega en ZIP | Enlace GitHub en sustitución, confirmado por el estudiante | Cumple formato acordado |
 
 ## Hallazgos críticos que NO deben ocultarse
 1. RandomForest ofrece mejor F1, AP y ROC-AUC; LogisticRegression alcanza mayor recall test y detecta 76 respuestas positivas adicionales. La selección fue sobre validation, nunca test.
@@ -30,3 +30,16 @@
 
 ## Integridad
 Recalcular métricas desde `resultados/predicciones_test.csv`; contrastar errores McNemar y delta F1 bootstrap; comprobar los SHA256 en `resultados/fuente_y_calidad.json`. El script y las pruebas permiten reproducir la entrega sin token ni cuenta privada de MLflow.
+
+## Mejora de rendimiento y contexto de negocio — análisis EXPLORATORIO
+
+Se incorporó un tercer modelo HistGradientBoosting y una comparación de F1 con umbrales elegidos exclusivamente sobre validation con el mismo protocolo para los tres modelos. La nueva comparación de F1 en test es **exploratoria**, no una prueba ciega adicional, porque la prueba ya se había inspeccionado.
+
+- F1 homogéneo test: LR 0.3662; RF **0.4117**; HGB 0.3990.
+- RF con umbral F1 0.19: precision 41.71%, recall 40.64%; contrasta con F2 original, precision 25.61%, recall 57.56%.
+- Baseline siempre positivo: F1 0.2095; evita comparar únicamente con un DummyClassifier de F1 nulo.
+- Capacidad del 20%: Precision@20% LR 28.32%, RF 30.20%, HGB 30.25%; lift 2.42x, 2.58x, 2.59x, respectivamente; **ranking descriptivo histórico, no causal**.
+- Evidencia: [anexo PDF](Anexo_Mejora_Modelos_Actividad6.pdf), [CSV F1](../resultados/analisis_adicional/comparacion_f1_umbral_validado.csv), [figura lift](../resultados/figuras/07_lift_presupuesto20.png), [scripts](../fuentes/analisis_adicional.py).
+
+### Capturas auténticas de Trello
+El PDF principal contiene 7 páginas sin capturas del tablero mientras no se suban los dos PNG a [evidencias/trello](../evidencias/trello/). Ya se programó su inclusión automática como octava página: no se deben presentar imágenes fabricadas como pantallas reales.
