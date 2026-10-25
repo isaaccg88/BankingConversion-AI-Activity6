@@ -1,0 +1,4 @@
+Modelo,seleccionados,positivos_seleccionados,precision_at_20,recall_at_20,lift_at_20,prevalencia_test,advertencia
+LogisticRegression,1808,512,0.2831858407079646,0.4839319470699433,2.4204627197751645,0.11699657193409267,Respuesta historica entre top-scored; no lift causal.
+RandomForest,1808,546,0.3019911504424779,0.5160680529300568,2.5811965722602337,0.11699657193409267,Respuesta historica entre top-scored; no lift causal.
+HistGradientBoosting,1808,547,0.30254424778761063,0.5170132325141777,2.585924038509795,0.11699657193409267,Respuesta historica entre top-scored; no lift causal.

@@ -1,0 +1,18 @@
+{
+  "tipo": "always_positive",
+  "descripcion": "Etiqueta todos como conversión; referencia útil de F1 con desbalance.",
+  "threshold": 0.5,
+  "accuracy": 0.11699657193409267,
+  "balanced_accuracy": 0.5,
+  "precision": 0.11699657193409267,
+  "recall": 1.0,
+  "specificity": 0.0,
+  "f1": 0.20948420948420948,
+  "f2": 0.3984934086629002,
+  "roc_auc": 0.5,
+  "average_precision": 0.11699657193409267,
+  "tn": 0,
+  "fp": 7985,
+  "fn": 0,
+  "tp": 1058
+}

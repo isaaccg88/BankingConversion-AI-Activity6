@@ -1,0 +1,10 @@
+Modelo,beneficio_hipotetico_por_respuesta,costo_hipotetico_por_contacto,contactos,respuestas_historicas,utilidad_hipotetica,advertencia
+LogisticRegression,5,1,1808,512,752,No son pesos ni ganancias reales; sin causalidad.
+LogisticRegression,10,1,1808,512,3312,No son pesos ni ganancias reales; sin causalidad.
+LogisticRegression,20,1,1808,512,8432,No son pesos ni ganancias reales; sin causalidad.
+RandomForest,5,1,1808,546,922,No son pesos ni ganancias reales; sin causalidad.
+RandomForest,10,1,1808,546,3652,No son pesos ni ganancias reales; sin causalidad.
+RandomForest,20,1,1808,546,9112,No son pesos ni ganancias reales; sin causalidad.
+HistGradientBoosting,5,1,1808,547,927,No son pesos ni ganancias reales; sin causalidad.
+HistGradientBoosting,10,1,1808,547,3662,No son pesos ni ganancias reales; sin causalidad.
+HistGradientBoosting,20,1,1808,547,9132,No son pesos ni ganancias reales; sin causalidad.
