@@ -119,6 +119,48 @@ def main():
     variants["RandomForest"]=existing["RandomForest_prob"].to_numpy()
     variants[NAME]=ptest
 
+    # Comparación equitativa adicional: MISMA función de selección de umbral
+    # F1 sobre validation para los tres modelos. Esta evaluación es exploratoria;
+    # el test ya se había consultado en el trabajo original.
+    from .train import pipe as original_pipe
+    equal_f1=[]
+    equal_f1_curves=[]
+    for model_name in ("LogisticRegression","RandomForest",NAME):
+        if model_name==NAME:
+            validation_proba=pv
+            test_proba=ptest
+        else:
+            model,_=original_pipe(model_name)
+            best=json.loads(original.set_index("Modelo").loc[model_name,"best_params_json"])
+            model.set_params(**best)
+            model.fit(x_train,y_train)
+            validation_proba=model.predict_proba(x_val)[:,1]
+            test_proba=model.predict_proba(x_test)[:,1]
+            # Asegurar que la reproducción del modelo original coincide con
+            # las predicciones del archivo ya publicado.
+            deviation=float(np.max(np.abs(test_proba-variants[model_name])))
+            if deviation>0.001:
+                raise RuntimeError(f"Modelo original no reproducible: {model_name}, delta={deviation}")
+        selected,curve,feasible=select_threshold_by_validation(y_val,validation_proba,"f1")
+        te=metrics(y_test,test_proba,selected["threshold"])
+        equal_f1.append({
+            "Modelo":model_name,
+            "objetivo_umbral":"F1 en validation, precision >= 0.20",
+            "threshold_validation":selected["threshold"],
+            "validation_f1":selected["f1"],
+            "validation_recall":selected["recall"],
+            "validation_precision":selected["precision"],
+            "test_f1_exploratorio":te["f1"],
+            "test_precision_exploratorio":te["precision"],
+            "test_recall_exploratorio":te["recall"],
+            "test_tp":te["tp"],"test_fp":te["fp"],
+            "test_fn":te["fn"],"test_tn":te["tn"],
+            "constraint_feasible":feasible,
+        })
+        equal_f1_curves.extend([{**x,"Modelo":model_name} for x in curve])
+    pd.DataFrame(equal_f1).to_csv(OUT/"analisis_adicional"/"comparacion_f1_umbral_validado.csv",index=False)
+    pd.DataFrame(equal_f1_curves).to_csv(OUT/"analisis_adicional"/"curvas_f1_umbral_validacion.csv",index=False)
+
     budget=[{"Modelo":n,**budget_metrics(y_test,p)} for n,p in variants.items()]
     allpositive=metrics(y_test,np.ones(len(y_test)),threshold=.5)
     baseline={
@@ -179,6 +221,7 @@ def main():
         "presupuesto_contacto_porcentaje":20,
         "baseline_todos_positivos_f1":allpositive["f1"],
         "metricas_presupuesto":budget,
+        "comparacion_f1_mismo_criterio":equal_f1,
         "limitaciones":[
             "Test no es nuevo ni ciego: ya fue evaluado y examinado en entrega principal.",
             "No comparar causalmente cohortes de edad ni estrategias de llamada.",
