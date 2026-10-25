@@ -275,6 +275,43 @@ def make():
     story.append(Paragraph("Código y evidencia: https://github.com/isaaccg88/BankingConversion-AI-Activity6",
                            styles["BCASmall"]))
 
+    # Página 8 opcional: evidencia visual REAL del tablero Trello.
+    # No crear imágenes sintéticas que aparenten ser capturas del sistema.
+    screenshots = [
+        (ROOT/"evidencias/trello/01_tablero_general.png",
+         "Evidencia Trello 1. Vista auténtica del tablero y sus listas."),
+        (ROOT/"evidencias/trello/02_tarjeta_resultados.png",
+         "Evidencia Trello 2. Tarjeta con resultados y análisis.")
+    ]
+    found = [f.exists() for f,_ in screenshots]
+    if any(found) and not all(found):
+        raise FileNotFoundError("Falta una de las dos capturas auténticas de Trello.")
+    if all(found):
+        new()
+        head("9. Evidencias visuales de Trello — capturas reales")
+        para("El tablero Banking Conversion AI de Trello documenta cinco listas "
+             "y diez tarjetas, incluidas métricas ROC/F1, validación, A/B "
+             "offline y decisión del modelo. Estas imágenes fueron capturadas "
+             "desde la interfaz auténtica de Trello. El acceso directo al tablero "
+             "es privado; las capturas públicas del repositorio permiten "
+             "al docente comprobar su contenido.")
+        for filepath,desc in screenshots:
+            raw = filepath.read_bytes()
+            if len(raw)<15000 or raw[:8]!=bytes.fromhex("89504e470d0a1a0a"):
+                raise ValueError("La evidencia Trello no es un PNG real válido: "+str(filepath))
+            w0,h0=ImageReader(str(filepath)).getSize()
+            if w0<750 or h0<360:
+                raise ValueError("La captura Trello tiene resolución insuficiente: "+str(filepath))
+            maxw,maxh=16.5*cm,8.0*cm
+            ratio=min(maxw/w0,maxh/h0)
+            story.append(KeepTogether([
+                Image(str(filepath),width=w0*ratio,height=h0*ratio),
+                Paragraph(desc,styles["BCACaption"])
+            ]))
+        para("<b>Interpretación:</b> el tablero es una visualización de "
+             "resultados ya obtenidos por Python, no un sistema de "
+             "seguimiento estadístico independiente.")
+
     def decor(c,d):
         c.saveState()
         w,h=A4
