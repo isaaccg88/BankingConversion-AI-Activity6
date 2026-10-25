@@ -105,13 +105,39 @@ No se requieren tokens de Hugging Face ni MLflow para la Actividad 6. En GitHub,
 
 **Documentos ejecutados:** [notebook validado](notebooks/Evaluacion_Actividad6.ipynb) y [reporte PDF académico de 7 páginas](docs/Reporte_Tecnico_Actividad6.pdf).
 
+## 6.1. Ampliación exploratoria para evaluar el F1
+
+Se detectó que el F1 original de RandomForest (0.3545) era moderado. Se preservó el protocolo original orientado a F2 y se ejecutó un experimento COMPLEMENTARIO, nunca presentado como validación externa: **la prueba original ya había sido inspeccionada**. Este hecho se registra explícitamente en el [resumen del análisis adicional](resultados/analisis_adicional/resumen_adicional.json).
+
+El nuevo procedimiento entrenó **HistGradientBoosting** (cinco folds, selección de hiperparámetros por Average Precision), y para los TRES algoritmos seleccionó umbrales maximizando **F1 solo en validation**, con precision mínima de 0.20.
+
+| Modelo | Umbral seleccionado en validación | F1 en validación | F1 en test exploratorio | Precisión test | Recall test |
+|---|---:|---:|---:|---:|---:|
+| LogisticRegression | 0.17 | 0.3739 | 0.3662 | 34.12% | 39.51% |
+| RandomForest | **0.19** | 0.4278 | **0.4117** | **41.71%** | 40.64% |
+| HistGradientBoosting | 0.21 | **0.4373** | 0.3990 | 41.89% | 38.09% |
+
+**Interpretación:** al favorecer F1, RandomForest mejora su precisión del 25.61% al 41.71%, pero reduce su recall del 57.56% al 40.64%: **el umbral comercial involucra un trade-off real**. Un baseline trivial que predice todos los clientes positivos tiene F1=0.2095, de modo que el resultado ofrece capacidad predictiva superior a ese referente, sin implicar que esté listo para despliegue real.
+
+Para cuantificar el interés comercial sin modificar el conjunto original, evaluamos **Precision@20% y lift** al contactar solo 1,808 de los 9,043 registros test con puntuación más alta:
+
+| Modelo | Contactos seleccionados | Conversiones históricas entre seleccionados | Precision@20% | Lift vs prevalencia |
+|---|---:|---:|---:|---:|
+| LogisticRegression | 1,808 | 512 | 28.32% | 2.42× |
+| RandomForest | 1,808 | 546 | 30.20% | 2.58× |
+| HistGradientBoosting | 1,808 | 547 | 30.25% | 2.59× |
+
+La diferencia de una conversión histórica entre RF e HistGradientBoosting en top-20% **no demuestra ventaja material ni estadística**. Ni estas métricas ni los escenarios monetarios hipotéticos constituyen ganancias realizadas o incrementos causales por el uso de IA.
+
+**Archivos:** [comparación F1 homogénea](resultados/analisis_adicional/comparacion_f1_umbral_validado.csv), [ranking comercial top-20%](resultados/analisis_adicional/metricas_presupuesto20.csv), [análisis por edad](resultados/analisis_adicional/evaluacion_grupos_edad.csv), [sensibilidad económica](resultados/analisis_adicional/sensibilidad_economica_hipotetica.csv), [figura de lift](resultados/figuras/07_lift_presupuesto20.png) y [anexo técnico PDF](docs/Anexo_Mejora_Modelos_Actividad6.pdf). El reporte principal sigue limitado a 7–8 páginas; el anexo es complementario.
+
 ## 7. Entregables y formato acordado
 
 - Reporte técnico PDF de 6–8 páginas con interpretación contextual, metodología, métricas, significancia y limitaciones.
 - Notebook o script ejecutado y reproducible con CV, ajuste de umbral, comparación y simulación A/B.
 - Tablero Trello con criterios, visualizaciones, evidencia de resultados y justificación del modelo. [Enlace al tablero](https://trello.com/b/EIKcvZ7j/banking-conversion-ai-actividad-6).
 
-La entrega propuesta es el enlace de GitHub en lugar del ZIP, **sujeto a confirmar que el profesor acepta el mismo cambio para la Actividad 6**. El enlace de Trello privado requiere acceso del profesor, o bien capturas auténticas incluidas como evidencia.
+**Formato de entrega confirmado por el estudiante: únicamente la URL del repositorio GitHub, en sustitución del ZIP.** Los archivos obligatorios permanecen publicados dentro del repositorio. El tablero Trello permanece privado. Las capturas auténticas se incorporarán como evidencias públicas en `evidencias/trello/` y al PDF de ocho páginas una vez recibidas.
 
 ## 8. Declaración de uso de inteligencia artificial
 
