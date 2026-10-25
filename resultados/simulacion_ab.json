@@ -1,0 +1,20 @@
+{
+  "tipo": "simulacion_AB_offline_no_causal",
+  "grupo_A": "seleccion_aleatoria",
+  "grupo_B": "ranking_RandomForest",
+  "n_grupo_A": 4521,
+  "n_grupo_B": 4522,
+  "contactados_A": 904,
+  "contactados_B": 904,
+  "conversiones_historicas_A": 88,
+  "conversiones_historicas_B": 270,
+  "tasa_A": 0.09734513274336283,
+  "tasa_B": 0.29867256637168144,
+  "diferencia_tasas": 0.20132743362831862,
+  "ic95_inf": 0.1657810160139641,
+  "ic95_sup": 0.23687385124267313,
+  "p_z_exploratorio": 6.532637406288367e-27,
+  "semilla": 48,
+  "presupuesto_relativo": 0.2,
+  "advertencia": "NO experimento real; observaciones históricas, selección condicionada por score y ausencia de contrafactual sin contacto. No estimar uplift causal."
+}

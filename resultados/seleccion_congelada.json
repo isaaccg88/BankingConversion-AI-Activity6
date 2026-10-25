@@ -1,0 +1,11 @@
+{
+  "modelo_seleccionado_en_validacion": "RandomForest",
+  "umbral": 0.12,
+  "criterio": "F2 en validación, desempate AP CV",
+  "umbrales_por_modelo": {
+    "LogisticRegression": 0.11,
+    "RandomForest": 0.12
+  },
+  "semilla": 42,
+  "test_no_usado_para_seleccion": true
+}

@@ -1,0 +1,96 @@
+{
+  "filas": 45211,
+  "positivos": 5289,
+  "splits": {
+    "train": 27126,
+    "validation": 9042,
+    "test": 9043
+  },
+  "seleccion": "RandomForest",
+  "validacion": {
+    "LogisticRegression": {
+      "threshold": 0.11,
+      "accuracy": 0.6765096217650962,
+      "balanced_accuracy": 0.6680040136984745,
+      "precision": 0.21338655204175622,
+      "recall": 0.6568998109640832,
+      "specificity": 0.6791082164328658,
+      "f1": 0.32213209733487835,
+      "f2": 0.464013887034317,
+      "roc_auc": 0.7211772907819419,
+      "average_precision": 0.3580049371105761,
+      "tn": 5422,
+      "fp": 2562,
+      "fn": 363,
+      "tp": 695
+    },
+    "RandomForest": {
+      "threshold": 0.12,
+      "accuracy": 0.767750497677505,
+      "balanced_accuracy": 0.6922022210773153,
+      "precision": 0.2732811140121845,
+      "recall": 0.5935727788279773,
+      "specificity": 0.7908316633266533,
+      "f1": 0.3742550655542312,
+      "f2": 0.48085758039816234,
+      "roc_auc": 0.747651434721996,
+      "average_precision": 0.40445021444313545,
+      "tn": 6314,
+      "fp": 1670,
+      "fn": 430,
+      "tp": 628
+    }
+  },
+  "bootstrap": {
+    "comparacion": "RandomForest - LogisticRegression",
+    "delta_f1": 0.04205322144096385,
+    "ic95_inferior": 0.03125392592308348,
+    "ic95_superior": 0.05259053880411054,
+    "repeticiones": 1000,
+    "pareado": true
+  },
+  "mcnemar": {
+    "a_correcto_b_error": 216,
+    "a_error_b_correcto": 1013,
+    "discordantes": 1229,
+    "p_exacto_bilateral": 1.1204408528523317e-123
+  },
+  "ab": {
+    "tipo": "simulacion_AB_offline_no_causal",
+    "grupo_A": "seleccion_aleatoria",
+    "grupo_B": "ranking_RandomForest",
+    "n_grupo_A": 4521,
+    "n_grupo_B": 4522,
+    "contactados_A": 904,
+    "contactados_B": 904,
+    "conversiones_historicas_A": 88,
+    "conversiones_historicas_B": 270,
+    "tasa_A": 0.09734513274336283,
+    "tasa_B": 0.29867256637168144,
+    "diferencia_tasas": 0.20132743362831862,
+    "ic95_inf": 0.1657810160139641,
+    "ic95_sup": 0.23687385124267313,
+    "p_z_exploratorio": 6.532637406288367e-27,
+    "semilla": 48,
+    "presupuesto_relativo": 0.2,
+    "advertencia": "NO experimento real; observaciones históricas, selección condicionada por score y ausencia de contrafactual sin contacto. No estimar uplift causal."
+  },
+  "baseline": {
+    "threshold": 0.5,
+    "accuracy": 0.8830034280659074,
+    "balanced_accuracy": 0.5,
+    "precision": 0.0,
+    "recall": 0.0,
+    "specificity": 1.0,
+    "f1": 0.0,
+    "f2": 0.0,
+    "roc_auc": 0.5,
+    "average_precision": 0.11699657193409267,
+    "tn": 7985,
+    "fp": 0,
+    "fn": 1058,
+    "tp": 0
+  },
+  "duracion_segundos": 34.493406478,
+  "limitaciones": "Observacional, distribución histórica, A/B no causal"
+}

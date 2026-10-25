@@ -1,0 +1,56 @@
+{
+  "dataset": "UCI Bank Marketing ID 222; bank-full.csv (versión histórica)",
+  "doi": "10.24432/C5K306",
+  "licencia": "CC BY 4.0",
+  "source_url": "https://archive.ics.uci.edu/static/public/222/bank+marketing.zip",
+  "filas": 45211,
+  "columnas_originales": [
+    "age",
+    "job",
+    "marital",
+    "education",
+    "default",
+    "balance",
+    "housing",
+    "loan",
+    "contact",
+    "day",
+    "month",
+    "duration",
+    "campaign",
+    "pdays",
+    "previous",
+    "poutcome",
+    "y"
+  ],
+  "features": [
+    "age",
+    "balance",
+    "pdays",
+    "previous",
+    "job",
+    "marital",
+    "education",
+    "default",
+    "housing",
+    "loan",
+    "poutcome"
+  ],
+  "excluidas": [
+    "duration",
+    "contact",
+    "day",
+    "month",
+    "campaign"
+  ],
+  "positivos": 5289,
+  "negativos": 39922,
+  "sha256": "d1513ec63b385506f7cfce9f2c5caa9fe99e7ba4e8c3fa264b3aaf0f849ed32d",
+  "supuestos": [
+    "Sólo se analizan asociaciones históricas, no efecto causal del contacto.",
+    "Al carecer de ID cliente, no se garantiza independencia por persona.",
+    "Se excluyen duration, datos del contacto y campaña actual para un escenario antes de llamada.",
+    "pdays=-1 es codificación histórica de no contactado previamente, no faltante.",
+    "unknown es una categoría original, no un nulo artificial."
+  ]
+}

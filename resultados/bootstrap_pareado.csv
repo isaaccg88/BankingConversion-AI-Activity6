@@ -1,0 +1,2 @@
+comparacion,delta_f1,ic95_inferior,ic95_superior,repeticiones,pareado
+RandomForest - LogisticRegression,0.04205322144096385,0.03125392592308348,0.05259053880411054,1000,True
