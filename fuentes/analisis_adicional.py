@@ -65,6 +65,7 @@ def main():
     y_train,y_val,y_test=(y[spl[z]] for z in ("train","validation","test"))
     original=pd.read_csv(OUT/"comparacion_modelos.csv")
     existing=pd.read_csv(OUT/"predicciones_test.csv")
+    (OUT/"analisis_adicional").mkdir(parents=True,exist_ok=True)
     assert len(existing)==len(y_test) and np.array_equal(existing.y.to_numpy(),y_test)
     assert set(original.Modelo)=={"LogisticRegression","RandomForest"}
     assert existing["indice_original"].tolist()==spl["test"].tolist()
