@@ -1,3 +1,12 @@
+## 2026-10-25 — Auditoría adicional del F1 y ranking comercial
+- Se evaluó HistGradientBoosting y se recalculó para los tres modelos el F1 con **el mismo objetivo de selección de umbral en validación**, sin modificar el entrenamiento o las conclusiones originales.
+- F1 test exploratorio: LR 0.3662; RF 0.4117; HGB 0.3990. Se explicita que el test ya se inspeccionó previamente y no constituye validación independiente.
+- Se añadieron baseline siempre positivo (F1 0.2095), Precision@20%, lift, segmentación descriptiva por edad y escenarios económicos hipotéticos sin inferencia causal.
+- [Anexo PDF de dos páginas](docs/Anexo_Mejora_Modelos_Actividad6.pdf) generado y renderizado; su auditoría de 2 páginas e imagen integrada pasó GitHub Actions.
+- Se habilitó la incorporación automática de dos **capturas reales** del tablero Trello como octava página del PDF principal al subirlas a `evidencias/trello/`.
+- Se creó una tarjeta adicional Trello con resultados exploratorios y diferenciación explícita entre clasificación y uplift causal.
+- El formato final de entrega es la URL del repositorio de GitHub y no un ZIP, conforme a lo indicado por el estudiante.
+
 # Registro de cambios — Banking Conversion AI / Actividad 6
 
 ## 2026-10-25 — Versión de evaluación y validación (resultados reales)
@@ -14,7 +23,7 @@
 
 ## Pendientes de entrega administrativa
 - Asegurar que el docente puede **abrir Trello privado**, o adjuntar capturas genuinas en el repositorio, dado que las instrucciones admiten capturas en PDF o enlace.
-- Confirmar si la autorización de sustitución ZIP por URL GitHub aplica explícitamente a Actividad 6.
+- Se confirma entrega mediante enlace al repositorio GitHub, sin ZIP.
 - Realizar revisión personal final del PDF, hipótesis y conclusiones, antes de enviarlo.
 
 ## Declaración de asistencia por IA
