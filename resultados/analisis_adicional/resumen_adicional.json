@@ -69,6 +69,56 @@
       "advertencia": "Respuesta historica entre top-scored; no lift causal."
     }
   ],
+  "comparacion_f1_mismo_criterio": [
+    {
+      "Modelo": "LogisticRegression",
+      "objetivo_umbral": "F1 en validation, precision >= 0.20",
+      "threshold_validation": 0.17,
+      "validation_f1": 0.3739130434782609,
+      "validation_recall": 0.4064272211720227,
+      "validation_precision": 0.3462157809983897,
+      "test_f1_exploratorio": 0.3661848445028471,
+      "test_precision_exploratorio": 0.34122448979591835,
+      "test_recall_exploratorio": 0.3950850661625709,
+      "test_tp": 418,
+      "test_fp": 807,
+      "test_fn": 640,
+      "test_tn": 7178,
+      "constraint_feasible": true
+    },
+    {
+      "Modelo": "RandomForest",
+      "objetivo_umbral": "F1 en validation, precision >= 0.20",
+      "threshold_validation": 0.19,
+      "validation_f1": 0.42782277274892805,
+      "validation_recall": 0.42438563327032136,
+      "validation_precision": 0.4313160422670509,
+      "test_f1_exploratorio": 0.41168022977501195,
+      "test_precision_exploratorio": 0.41707080504364696,
+      "test_recall_exploratorio": 0.4064272211720227,
+      "test_tp": 430,
+      "test_fp": 601,
+      "test_fn": 628,
+      "test_tn": 7384,
+      "constraint_feasible": true
+    },
+    {
+      "Modelo": "HistGradientBoosting",
+      "objetivo_umbral": "F1 en validation, precision >= 0.20",
+      "threshold_validation": 0.21,
+      "validation_f1": 0.4372549019607843,
+      "validation_recall": 0.4215500945179584,
+      "validation_precision": 0.45417515274949083,
+      "test_f1_exploratorio": 0.39900990099009903,
+      "test_precision_exploratorio": 0.4189189189189189,
+      "test_recall_exploratorio": 0.3809073724007561,
+      "test_tp": 403,
+      "test_fp": 559,
+      "test_fn": 655,
+      "test_tn": 7426,
+      "constraint_feasible": true
+    }
+  ],
   "limitaciones": [
     "Test no es nuevo ni ciego: ya fue evaluado y examinado en entrega principal.",
     "No comparar causalmente cohortes de edad ni estrategias de llamada.",
