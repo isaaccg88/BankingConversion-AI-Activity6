@@ -5,7 +5,7 @@
 **Repositorio:** https://github.com/isaaccg88/BankingConversion-AI-Activity6  
 **Tablero auténtico de Trello:** https://trello.com/b/EIKcvZ7j/banking-conversion-ai-actividad-6
 
-> **Estado:** scripts y automatizaciones publicados; los resultados se incorporan únicamente después de ejecutar los experimentos y pasar verificaciones de integridad. No se atribuyen tasas ni ganancias ficticias.
+> **Estado: EXPERIMENTO COMPLETADO Y VALIDADO.** GitHub Actions ejecutó entrenamiento, CV, selección de umbrales, test y comparaciones estadísticas; publicó resultados, notebook ejecutado (8/8 celdas sin errores) y PDF verificado de **7 páginas**. Los datos proceden de UCI; ninguna tasa ni ganancia es inventada.
 
 ## 1. Problema y objetivo SMART
 
@@ -73,11 +73,37 @@ python -m fuentes.train
 
 No se requieren tokens de Hugging Face ni MLflow para la Actividad 6. En GitHub, el workflow **Actividad 6 - Entrenamiento y evidencia real** realiza estos pasos y publica sus resultados después de comprobar que son válidos.
 
-## 6. Evidencia estadística y conclusiones
+## 6. Resultados reales, significancia y conclusiones
 
-Las tablas de resultados, matrices de confusión, gráficos ROC/PR y la comparación A/B se publican **solo después de ejecutar** los experimentos. No se deben confundir p-valores bajos con mejora causal o utilidad empresarial: la simulación usa etiquetas históricas y no contiene un grupo real de control sin contacto.
+**Las cifras siguientes fueron calculadas a partir de las 9,043 observaciones de prueba.** El modelo se seleccionó exclusivamente mediante validación, no por inspección retrospectiva de las métricas de test.
 
-Para una prueba de campo, habrá que definir previamente población elegible, unidad de aleatorización (cliente), presupuesto, exclusiones, hipótesis y tamaño de muestra, registrar la campaña prospectivamente y utilizar una variable de respuesta causalmente relevante. También será necesaria auditoría de equidad y tratamiento de datos personales.
+| Indicador de test | LogisticRegression | RandomForest |
+|---|---:|---:|
+| AP media de 5 folds de entrenamiento | 0.3435 | **0.3670** |
+| F2 en validación | 0.4640 | **0.4809** |
+| Umbral congelado | 0.11 | 0.12 |
+| Accuracy | 0.6666 | **0.7547** |
+| Precision | 0.2059 | **0.2561** |
+| Recall | **0.6474** | 0.5756 |
+| F1-score | 0.3124 | **0.3545** |
+| ROC-AUC | 0.7204 | **0.7392** |
+| Average Precision | 0.3470 | **0.3838** |
+| Verdaderos positivos (TP) | **685** | 609 |
+| Falsos negativos (FN) | **373** | 449 |
+| Falsos positivos (FP) | 2,642 | **1,769** |
+| Verdaderos negativos (TN) | 5,343 | **6,216** |
+
+**Interpretación:** Random Forest reduce contactos improductivos (873 falsos positivos menos) y aumenta precision y F1, pero deja sin detectar 76 conversiones históricas adicionales con respecto a la regresión logística. Por tanto, la elección depende de la restricción de llamadas y del costo de las oportunidades perdidas. La selección formal fue RandomForest por mayor F2 de validación.
+
+**Baseline:** el modelo mayoritario DummyClassifier logra una accuracy elevada simplemente por la prevalencia de no contratación, pero tiene recall=0 y F1=0.
+
+**Significancia predictiva:** McNemar exacto sobre discordancias de error: b=216 y c=1,013; p=1.12×10⁻¹²³. Bootstrap pareado de 1,000 remuestreos: diferencia F1(RF−LR)=**0.0421**, IC95 **[0.0313, 0.0526]**. Estos contrastes respaldan una diferencia observada entre predictores en esta muestra; no prueban generalización temporal ni impacto económico.
+
+**Simulación A/B retrospectiva:** con 904 seleccionados por estrategia, A (aleatoria) identificó 88 conversiones históricas (9.73%) y B (ranking RF) 270 (29.87%). Diferencia descriptiva: 20.13 puntos porcentuales (IC95 aproximado 16.58 a 23.69 pp). **No es una prueba A/B de campo ni demuestra incremento causal por utilizar IA.** El protocolo explica por qué la comparación observacional está condicionada por la selección.
+
+**Figuras trazables:** [curvas ROC y PR](resultados/figuras/01_02_curvas_roc_pr.png), [matrices de confusión](resultados/figuras/03_matrices_confusion.png), [hiperparámetros CV](resultados/figuras/04_cv.png), [A/B offline](resultados/figuras/05_ab_offline.png), [F1 test](resultados/figuras/06_f1_test.png).
+
+**Documentos ejecutados:** [notebook validado](notebooks/Evaluacion_Actividad6.ipynb) y [reporte PDF académico de 7 páginas](docs/Reporte_Tecnico_Actividad6.pdf).
 
 ## 7. Entregables y formato acordado
 
