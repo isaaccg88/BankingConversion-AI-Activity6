@@ -1,0 +1,74 @@
+name: Actividad 6 - Entrenamiento y evidencia real
+
+on:
+  push:
+    paths:
+      - '.github/workflows/train-evaluate.yml'
+      - 'fuentes/train.py'
+      - 'fuentes/datos.py'
+      - 'fuentes/evaluation.py'
+      - 'requirements.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  experimento:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Instalar dependencias fijadas
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+      - name: Ejecutar pruebas unitarias
+        run: python -m unittest discover -s tests -v
+      - name: Descargar UCI y ejecutar 5-fold, test y A/B offline
+        run: python -m fuentes.train
+      - name: Comprobar integridad y métricas
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import pandas as pd
+          R=Path("resultados")
+          d=pd.read_csv("datos/bank-full.csv",sep=";")
+          t=pd.read_csv(R/"predicciones_test.csv")
+          a=pd.read_csv(R/"comparacion_modelos.csv")
+          ab=json.loads((R/"simulacion_ab.json").read_text())
+          selection=json.loads((R/"seleccion_congelada.json").read_text())
+          assert len(d)==45211 and len(t)>9000
+          assert a["Modelo"].nunique()==2 and len(a)==2
+          assert a["test_f1"].between(0,1).all()
+          assert a["test_roc_auc"].between(.5,1).all()
+          assert selection["test_no_usado_para_seleccion"]
+          assert ab["tipo"]=="simulacion_AB_offline_no_causal"
+          assert len(list((R/"figuras").glob("*.png")))>=5
+          print("VALIDACIÓN REAL COMPLETA")
+          print(a[["Modelo","test_precision","test_recall","test_f1","test_roc_auc"]])
+          PY
+      - name: Guardar evidencia en artefacto Actions
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: banking-conversion-experimento
+          path: |
+            resultados/
+            datos/
+          if-no-files-found: warn
+      - name: Publicar resultados observados en main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add datos/ resultados/
+          if ! git diff --cached --quiet; then
+            git commit -m "results: publicar entrenamiento UCI y validación estadística real"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
