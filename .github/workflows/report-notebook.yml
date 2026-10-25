@@ -9,6 +9,10 @@ on:
       - 'notebooks/Evaluacion_Actividad6.ipynb'
   workflow_dispatch:
 
+concurrency:
+  group: banking-actividad6-reporte
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
