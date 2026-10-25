@@ -5,7 +5,12 @@ on:
     paths:
       - '.github/workflows/exploratory-validation.yml'
       - 'fuentes/analisis_adicional.py'
+      - 'fuentes/generar_anexo.py'
   workflow_dispatch:
+
+concurrency:
+  group: banking-actividad6-adicional
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -50,6 +55,20 @@ jobs:
           assert (root/"figuras/07_lift_presupuesto20.png").is_file()
           print("Completo: modelo extra, precisión@20, lift, baseline, segmentos y advertencia exploratoria.")
           PY
+      - name: Crear y validar anexo académico exploratorio
+        run: |
+          python -m pip install pymupdf
+          python -m fuentes.generar_anexo
+          python - <<'PY'
+          import fitz
+          from pathlib import Path
+          p=Path("docs/Anexo_Mejora_Modelos_Actividad6.pdf")
+          assert p.is_file() and p.stat().st_size>30000
+          d=fitz.open(p)
+          print("ANEXO:",len(d),"páginas, imágenes:",sum(len(x.get_images()) for x in d))
+          assert 2<=len(d)<=3
+          assert "EXPLORATORIO" in "".join(page.get_text() for page in d).upper()
+          PY
       - name: Evidencia CI
         if: always()
         uses: actions/upload-artifact@v4
@@ -58,14 +77,15 @@ jobs:
           path: |
             resultados/analisis_adicional/
             resultados/figuras/07_lift_presupuesto20.png
+            docs/Anexo_Mejora_Modelos_Actividad6.pdf
           if-no-files-found: warn
       - name: Publicar anexo científico
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add resultados/analisis_adicional/ resultados/figuras/07_lift_presupuesto20.png
+          git add resultados/analisis_adicional/ resultados/figuras/07_lift_presupuesto20.png docs/Anexo_Mejora_Modelos_Actividad6.pdf
           if ! git diff --cached --quiet; then
             git commit -m "results: modelo adicional y presupuesto comercial exploratorios"
-            git pull --rebase origin main
+            git pull --no-rebase -X ours origin main
             git push origin HEAD:main
           fi
