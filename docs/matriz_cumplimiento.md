@@ -18,7 +18,7 @@
 | Justificación técnica y de impacto comercial | README §6; PDF p. 3 y 7; Trello tarjeta de decisión | Cumple, escenario de costos reales pendiente de datos |
 | Evidencia de experimentación | GitHub Actions en verde, CSV, figuras, notebook ejecutado 8/8 | Cumple |
 | Reporte técnico 6–8 páginas | docs/Reporte_Tecnico_Actividad6.pdf (7 páginas) | Cumple |
-| Tablero Trello visual | https://trello.com/b/EIKcvZ7j/banking-conversion-ai-actividad-6 (5 listas, 10 tarjetas) | Construido, acceso docente pendiente |
+| Tablero Trello visual | https://trello.com/b/EIKcvZ7j/banking-conversion-ai-actividad-6 (5 listas, 11 tarjetas) | Construido, acceso docente pendiente |
 | Entrega en ZIP | Enlace GitHub en sustitución, confirmado por el estudiante | Cumple formato acordado |
 
 ## Hallazgos críticos que NO deben ocultarse
