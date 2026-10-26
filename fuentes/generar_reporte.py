@@ -302,10 +302,28 @@ def make():
             w0,h0=ImageReader(str(filepath)).getSize()
             if w0<750 or h0<360:
                 raise ValueError("La captura Trello tiene resolución insuficiente: "+str(filepath))
+            # La captura íntegra permanece disponible en evidencias/trello/.
+            # Para impresión, ampliar solo la tarjeta central mediante un
+            # recorte auténtico, sin alterar ninguna cifra ni texto original.
+            image_source = str(filepath)
+            if filepath.name == "02_tarjeta_resultados.png":
+                from io import BytesIO
+                from PIL import Image as PILImage
+                screenshot = PILImage.open(filepath).convert("RGB")
+                left = int(screenshot.width * .23)
+                top = int(screenshot.height * .15)
+                right = int(screenshot.width * .78)
+                bottom = int(screenshot.height * .66)
+                zoom_card = screenshot.crop((left,top,right,bottom))
+                image_source = BytesIO()
+                zoom_card.save(image_source,format="PNG")
+                image_source.seek(0)
+                w0,h0 = zoom_card.size
+                desc = "Evidencia Trello 2. Recorte ampliado, auténtico, de la tarjeta de métricas; captura completa en GitHub."
             maxw,maxh=16.5*cm,8.0*cm
             ratio=min(maxw/w0,maxh/h0)
             story.append(KeepTogether([
-                Image(str(filepath),width=w0*ratio,height=h0*ratio),
+                Image(image_source,width=w0*ratio,height=h0*ratio),
                 Paragraph(desc,styles["BCACaption"])
             ]))
         para("<b>Interpretación:</b> el tablero es una visualización de "
