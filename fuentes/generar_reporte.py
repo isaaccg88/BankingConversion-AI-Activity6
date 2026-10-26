@@ -290,7 +290,7 @@ def make():
         new()
         head("9. Evidencias visuales de Trello — capturas reales")
         para("El tablero Banking Conversion AI de Trello documenta cinco listas "
-             "y diez tarjetas, incluidas métricas ROC/F1, validación, A/B "
+             "y once tarjetas, incluidas métricas ROC/F1, validación, A/B "
              "offline y decisión del modelo. Estas imágenes fueron capturadas "
              "desde la interfaz auténtica de Trello. El acceso directo al tablero "
              "es privado; las capturas públicas del repositorio permiten "
