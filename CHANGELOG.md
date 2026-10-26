@@ -18,7 +18,7 @@
 - En test: RF F1=0.3545, ROC-AUC=0.7392; LR F1=0.3124, ROC-AUC=0.7204. LR ofrece mayor recall: 0.6474 vs RF 0.5756, limitación explícita en la conclusión.
 - Se ejecutaron McNemar exacto y bootstrap pareado de diferencia F1, y una simulación A/B **solo offline y no causal** con política A aleatoria vs ranking RF.
 - GitHub Actions verificó prueba de código, integridad del dataset, notebook de ocho celdas ejecutadas sin errores, PDF de siete páginas y cinco imágenes.
-- Se creó el tablero privado Trello Banking Conversion AI — Actividad 6 y se cargaron diez tarjetas; ocho incluyen resultados experimentales reales.
+- Se creó el tablero privado Trello Banking Conversion AI — Actividad 6 y se cargaron inicialmente diez tarjetas; se añadió una undécima con el análisis exploratorio del F1 y Precision@20%.
 - Se publicó reporte [PDF](docs/Reporte_Tecnico_Actividad6.pdf) y notebook [ejecutado](notebooks/Evaluacion_Actividad6.ipynb).
 
 ## Pendientes de entrega administrativa
