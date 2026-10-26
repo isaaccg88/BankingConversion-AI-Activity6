@@ -1,6 +1,6 @@
 # Evidencias visuales auténticas del tablero Trello — Actividad 6
 
-**El tablero ya está creado y contiene 5 listas y 10 tarjetas con los resultados publicados.**
+**El tablero ya está creado y contiene 5 listas y 11 tarjetas con los resultados publicados.**
 
 Enlace: https://trello.com/b/EIKcvZ7j/banking-conversion-ai-actividad-6
 
